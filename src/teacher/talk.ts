@@ -4,7 +4,7 @@ export function init() {
   const voices = window.speechSynthesis.getVoices();
   console.log('voices loop', voices.length);
   if (voices.length === 0) {
-    alert('No synth voices :(');
+    console.error('No synth voices :(');
     return;
   }
 
@@ -27,22 +27,32 @@ export function init() {
   }
 }
 
-export function speak(langCode: string, text: string) {
+interface Say {
+  lang: string;
+  text: string;
+  speed?: number;
+}
+
+export async function speak({lang, text}: Say) {
   if (Object.keys(voiceMap).length === 0) {
-    alert("Tried to speak but no voices found");
+    console.error("Tried to speak but no voices found");
     init();
   }
   window.speechSynthesis.cancel();
 
   const utterThis = new window.SpeechSynthesisUtterance(text);
-  utterThis.voice = voiceMap[langCode];
-  console.log("speeaking", langCode, text, utterThis.voice);
+  utterThis.voice = voiceMap[lang];
+  console.log("speeaking", lang, text, utterThis.voice);
   window.speechSynthesis.speak(utterThis);
-  utterThis.onend = (event) => {
-    console.log('Utterance has finished being spoken after ' + event.elapsedTime + ' milliseconds.');
-  }
-
-  utterThis.onerror = (event) => {
-    console.log('utter error', event);
-  }
+  return new Promise<void>((resolve, reject) => {
+    utterThis.onend = (event) => {
+      console.log('Utterance has finished being spoken after ' + event.elapsedTime + ' milliseconds.');
+      resolve();
+    }
+  
+    utterThis.onerror = (event) => {
+      console.log('utter error', event);
+      reject(event);
+    }
+  });
 }

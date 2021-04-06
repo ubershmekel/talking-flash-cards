@@ -1,29 +1,34 @@
-interface Lesson {
-  data: any;
+export interface LessonData {
+  languages: string[],
+}
+
+export interface Lesson {
+  data: LessonData;
   pairs: string[][];
 }
 
-export function parseJtxt(text: string) {
-  const lines = text.split(/\r?\n/);
+export function parseJtxt(text: string): Lesson {
+  // https://stackoverflow.com/questions/21895233/how-in-node-to-split-string-by-newline-n/21896652
+  const lines = text.split(/[\r\n]+/);
   let isJson = false;
-  let bufferLines = [];
+  let jsonLines = [];
   let previousPhrase: string = '';
   const pairs: string[][] = [];
   let data: any = null;
   for (let i = 0; i < lines.length; i++) {
     const phrase = lines[i].trim();
     if ('<json>' === phrase) {
-      bufferLines = [];
+      jsonLines = [];
       isJson = true;
       continue;
     }
     if ('</json>' === phrase) {
       isJson = false;
-      data = JSON.parse(bufferLines.join(''));
+      data = JSON.parse(jsonLines.join(''));
       continue;
     }
     if (isJson) {
-      bufferLines.push(phrase);
+      jsonLines.push(phrase);
       continue;
     }
     
@@ -48,7 +53,7 @@ export async function getFile() {
   //   "api_key"
   // );
   const request = new Request(
-    "/examples/attack-on-titan-s1e1.jtxt",
+    "examples/attack-on-titan-s1e1.jtxt",
     {
       method: "GET",
       headers,
@@ -58,5 +63,7 @@ export async function getFile() {
   );
   const res = await fetch(request);
   const text = await res.text();
-  console.log(parseJtxt(text));
+  const lesson = parseJtxt(text);
+  console.log(lesson);
+  return lesson;
 }
