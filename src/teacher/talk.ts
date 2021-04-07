@@ -27,13 +27,25 @@ export function init() {
   }
 }
 
+export function stopTalking() {
+  window.speechSynthesis.cancel();
+}
+
 interface Say {
   lang: string;
   text: string;
-  speed?: number;
+  rate?: number;
 }
 
-export async function speak({lang, text}: Say) {
+let lastSpoken = new Date().getTime();
+
+export async function speak({lang, text, rate}: Say) {
+  const secondsSinceSpoken = (new Date().getTime() - lastSpoken) / 1000;
+  if (secondsSinceSpoken < 0.1) {
+    throw new Error("You're talking too fast");
+  } else {
+    lastSpoken = new Date().getTime();
+  }
   if (Object.keys(voiceMap).length === 0) {
     console.error("Tried to speak but no voices found");
     init();
@@ -42,6 +54,9 @@ export async function speak({lang, text}: Say) {
 
   const utterThis = new window.SpeechSynthesisUtterance(text);
   utterThis.voice = voiceMap[lang];
+  if (rate) {
+    utterThis.rate = rate;
+  }
   console.log("speeaking", lang, text, utterThis.voice);
   window.speechSynthesis.speak(utterThis);
   return new Promise<void>((resolve, reject) => {

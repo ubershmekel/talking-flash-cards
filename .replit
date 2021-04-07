@@ -1,0 +1,4 @@
+language = "nodejs"
+run = "npm run serve"
+[packager]
+ignoredPaths=["src"]

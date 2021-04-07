@@ -41,6 +41,8 @@ interface ComponentData {
   isPlaying: boolean;
 }
 
+const userHitStop = "userHitStop";
+
 export default defineComponent({
   name: 'TeacherControls',
   computed: {
@@ -84,6 +86,65 @@ export default defineComponent({
       this.validateIndex();
     },
 
+    async playLine({texts, languages}: any) {
+        // Read to teach.
+        // One fast read
+        // One slow read
+        // One fast read
+        await talk.speak({
+          text: texts[0],
+          lang: languages[0],
+          rate: 1.0,
+        });
+
+        if (!this.$data.isPlaying) {
+          throw userHitStop;
+        }
+        await sleep(200);
+
+        await talk.speak({
+          text: texts[1],
+          lang: languages[1],
+        });
+
+        if (!this.$data.isPlaying) {
+          throw userHitStop;
+        }
+        await sleep(200);
+
+        await talk.speak({
+          text: texts[0],
+          lang: languages[0],
+          rate: 0.4,
+        });
+
+        if (!this.$data.isPlaying) {
+          throw userHitStop;
+        }
+        await sleep(200);
+
+        await talk.speak({
+          text: texts[0],
+          lang: languages[0],
+          rate: 1.0,
+        });
+
+        if (!this.$data.isPlaying) {
+          throw userHitStop;
+        }
+        await sleep(1000);
+
+        await talk.speak({
+          text: texts[1],
+          lang: languages[1],
+        });
+
+        if (!this.$data.isPlaying) {
+          throw userHitStop;
+        }
+        await sleep(1000);
+    },
+
     async play() {
       if (!this.$data.lesson) {
         console.error("playing an empty lesson");
@@ -91,21 +152,13 @@ export default defineComponent({
       }
 
       while (this.$data.isPlaying) {
-        await talk.speak({
-          text: this.$data.lesson.pairs[this.$data.index - 1][0],
-          lang: this.$data.lesson.data.languages[0]
+
+        await this.playLine({
+          texts: this.$data.lesson.pairs[this.$data.index - 1],
+          languages: this.$data.lesson.data.languages,
         });
 
-        await sleep(1000);
-
-        await talk.speak({
-          text: this.$data.lesson.pairs[this.$data.index - 1][1],
-          lang: this.$data.lesson.data.languages[1]
-        });
-
-        await sleep(1000);
-
-        console.log("index", this.$data.index);
+        console.log("index played", this.$data.index);
 
         this.next();
       }
@@ -113,6 +166,7 @@ export default defineComponent({
 
     stop() {
       this.$data.isPlaying = false;
+      talk.stopTalking();
     }
   },
   data() {
