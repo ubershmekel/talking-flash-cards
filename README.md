@@ -1,5 +1,11 @@
 # talking-flash-cards
 
+Learn by listening to the browser read out flash cards.
+
+## Flash card data format
+
+See the examples folder. The `.jtxt` file format starts with JSON section, and then has pairs of lines with an empty line in between them.
+
 ## Project setup
 ```
 npm install
