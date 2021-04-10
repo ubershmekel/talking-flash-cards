@@ -1,6 +1,29 @@
 <json>
 {
-  "languages": ["ja-JP", "en-US"]
+  "languages": ["ja-JP", "en-US"],
+  "title": "Attack on Titan s1e1",
+  "say": [
+    {
+      "line": 0,
+      "rate": 0.9,
+      "pause": 1.0
+    },
+    {
+      "line": 1,
+      "rate": 1.0,
+      "pause": 0.5
+    },
+    {
+      "line": 0,
+      "rate": 0.5,
+      "pause": 1.0
+    },
+    {
+      "line": 0,
+      "rate": 1.0,
+      "pause": 1.0
+    }
+  ]
 }
 </json>
 その

@@ -29,10 +29,6 @@ import { defineComponent } from 'vue';
 import { getFile, Lesson } from '../teacher/jtxtReader';
 import * as talk from '../teacher/talk';
 
-function sleep(ms: number): Promise<void> {
-  return new Promise(resolve => setTimeout(resolve, ms));
-}
-
 interface ComponentData {
   index: number;
   indexMin: number;
@@ -41,7 +37,7 @@ interface ComponentData {
   isPlaying: boolean;
 }
 
-const userHitStop = "userHitStop";
+// const userHitStop = "userHitStop";
 
 export default defineComponent({
   name: 'TeacherControls',
@@ -77,72 +73,15 @@ export default defineComponent({
     },
 
     prev() {
+      this.stop();
       this.$data.index -= 1;
       this.validateIndex();
     },
 
     next() {
+      this.stop();
       this.$data.index += 1;
       this.validateIndex();
-    },
-
-    async playLine({texts, languages}: any) {
-        // Read to teach.
-        // One fast read
-        // One slow read
-        // One fast read
-        await talk.speak({
-          text: texts[0],
-          lang: languages[0],
-          rate: 1.0,
-        });
-
-        if (!this.$data.isPlaying) {
-          throw userHitStop;
-        }
-        await sleep(200);
-
-        await talk.speak({
-          text: texts[1],
-          lang: languages[1],
-        });
-
-        if (!this.$data.isPlaying) {
-          throw userHitStop;
-        }
-        await sleep(200);
-
-        await talk.speak({
-          text: texts[0],
-          lang: languages[0],
-          rate: 0.4,
-        });
-
-        if (!this.$data.isPlaying) {
-          throw userHitStop;
-        }
-        await sleep(200);
-
-        await talk.speak({
-          text: texts[0],
-          lang: languages[0],
-          rate: 1.0,
-        });
-
-        if (!this.$data.isPlaying) {
-          throw userHitStop;
-        }
-        await sleep(1000);
-
-        await talk.speak({
-          text: texts[1],
-          lang: languages[1],
-        });
-
-        if (!this.$data.isPlaying) {
-          throw userHitStop;
-        }
-        await sleep(1000);
     },
 
     async play() {
@@ -151,12 +90,22 @@ export default defineComponent({
         return;
       }
 
+      const languages = this.$data.lesson.data.languages;
       while (this.$data.isPlaying) {
 
-        await this.playLine({
-          texts: this.$data.lesson.pairs[this.$data.index - 1],
-          languages: this.$data.lesson.data.languages,
-        });
+        const texts = this.$data.lesson.pairs[this.$data.index - 1];
+        for (let sayJtxt of this.$data.lesson.data.say) {
+          const lineIndex = sayJtxt["line"];
+          const saySay = {
+            lang: languages[lineIndex],
+            text: texts[lineIndex],
+            rate: sayJtxt.rate,
+            pause: sayJtxt.pause,
+          };
+          talk.talkBufferPush(saySay);
+        }
+
+        await talk.talkBufferGo();
 
         console.log("index played", this.$data.index);
 

@@ -1,5 +1,7 @@
 const voiceMap: {[lang: string]: SpeechSynthesisVoice} = {};
 
+let talkBuffer: Say[] = [];
+
 export function init() {
   const voices = window.speechSynthesis.getVoices();
   console.log('voices loop', voices.length);
@@ -29,12 +31,30 @@ export function init() {
 
 export function stopTalking() {
   window.speechSynthesis.cancel();
+  talkBuffer = [];
 }
 
 interface Say {
   lang: string;
   text: string;
-  rate?: number;
+  rate: number;
+  pause: number;
+}
+
+function sleep(ms: number): Promise<void> {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+export async function talkBufferPush(phrase: Say) {
+  talkBuffer.push(phrase);
+}
+
+export async function talkBufferGo() {
+  while (talkBuffer.length > 0) {
+    const phrase: Say = talkBuffer.shift() as Say;
+    await speak(phrase);
+    await sleep(phrase.pause * 1000);
+  }
 }
 
 let lastSpoken = new Date().getTime();

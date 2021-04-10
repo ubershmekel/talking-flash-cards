@@ -1,5 +1,13 @@
+export interface jtxtSay {
+  line: number; // index of line (0 or 1)
+  rate: number; // rate to speak (1.0 is neutral)
+  pause: number; // seconds to wait after saying it
+}
+
 export interface LessonData {
-  languages: string[],
+  languages: string[];
+  title: string;
+  say: jtxtSay[];
 }
 
 export interface Lesson {
