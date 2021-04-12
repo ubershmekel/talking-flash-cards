@@ -73,13 +73,13 @@ export default defineComponent({
     },
 
     prev() {
-      this.stop();
+      talk.stopTalking();
       this.$data.index -= 1;
       this.validateIndex();
     },
 
     next() {
-      this.stop();
+      talk.stopTalking();
       this.$data.index += 1;
       this.validateIndex();
     },
