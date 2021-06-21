@@ -105,11 +105,19 @@ export default defineComponent({
           talk.talkBufferPush(saySay);
         }
 
-        await talk.talkBufferGo();
+        const finished = await talk.talkBufferGo();
+        // if (!finished) {
+        //   // was cancelled for some reason
+        //   // so stop.
+        //   console.log("Stopping loop");
+        //   return;
+        // }
 
-        console.log("index played", this.$data.index);
+        console.log("index played", finished, this.$data.index);
 
-        this.next();
+        if (finished && this.isPlaying) {
+          this.next();
+        }
       }
     },
 

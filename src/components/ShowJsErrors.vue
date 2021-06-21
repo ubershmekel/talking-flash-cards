@@ -1,0 +1,153 @@
+<template>
+  <div>
+  </div>
+</template>
+
+<script>
+    //////////
+    // This is an error handler to show JS errors to the user.
+    // More info at https://github.com/ubershmekel/show-js-errors
+    // Please modify `showJsErrorsMessage` to suit your needs.
+    //////////
+    var showJsErrorsMessage = "Unexpected error :( ";
+    function showAlert(message) {
+        if (!document.body) {
+            // toasts don't work before the body exists, so we postpone the toast.
+            setTimeout(function () { showAlert(message); }, 200);
+            return;
+        }
+        var containerId = 'snackAlertsContainer';
+        var containerElem = document.getElementById(containerId);
+        if (!containerElem) {
+            // We need a container so alerts don't overlap
+            containerElem = document.createElement("div");
+            containerElem.id = containerId;
+            document.body.appendChild(containerElem);
+        }
+        // Get the snackbar DIV
+        var elem = document.createElement("div");
+        elem.innerHTML = message;
+        // Add the "show" class to DIV
+        elem.className = "snackAlert show";
+        elem.onmouseenter = function() {
+            if (hiderTimeoutId) {
+                clearTimeout(hiderTimeoutId);
+                hiderTimeoutId = 0;
+            }
+        }
+        elem.onmouseleave = function() {
+            scheduleRemoval();
+        }
+
+        var hiderTimeoutId = 0;
+        function scheduleRemoval() {
+            var timeBeforeFadeoutStartsMs = 3000;
+            if (hiderTimeoutId) {
+                // Oddly this can happen when mousing over quickly.
+                return;
+            }
+            hiderTimeoutId = setTimeout(function() {
+                // Start fading element out
+                // Make sure `fadeoutDuration` fits the css transition duration
+                var fadeoutDuration = 1000;
+                elem.className = elem.className.replace("show", "hiding");
+                    setTimeout(function () {
+                    // Remove the element entirely
+                    elem.parentNode.removeChild(elem);
+                }, fadeoutDuration);
+            }, timeBeforeFadeoutStartsMs);
+        }
+
+        scheduleRemoval();
+        containerElem.appendChild(elem);
+    }
+
+    window.onerror = function (msg) { //, url, linenumber) {
+        // Tell users when errors occur
+        // Based on http://stackoverflow.com/questions/2604976/javascript-how-to-display-script-errors-in-a-popup-alert/2604997#2604997
+        // Note that if you get the `msg` as "Script error." that's because of cross-origin scrubbing,
+        // see: https://stackoverflow.com/questions/19141195/how-can-we-listen-for-errors-that-do-not-trigger-window-onerror/19141439#19141439
+        showAlert(showJsErrorsMessage + msg)
+        // `return false` to report on dev console too
+        return false;
+    }
+
+    window.addEventListener("unhandledrejection", function (event) {
+        // Handle unhandled promises, these should probably just throw, yet here we are.
+        showAlert(showJsErrorsMessage + " Broken promise - " + event.reason);
+        //throw 'broken promise: ' + event.reason
+    });
+</script>
+<style type="text/css">
+    #snackAlertsContainer {
+        /* Sit on top of the screen */
+        position: fixed;
+        /* Add a z-index if needed */
+        z-index: 1;
+        bottom: 0;
+        right: 0;
+        width: 0;
+    }
+
+    .snackAlert {
+        display: none;
+        /* Hidden by default. Visible on click */
+        margin: auto;
+        position: relative;
+        right: 54vw;
+        width: 50vw;
+        /* `bottom` is tied to the animation `fadein` */
+        bottom: 20px;
+        margin-bottom: 16px;
+        background-color: #933;
+        color: #fff;
+        text-align: center;
+        border-radius: 2px;
+        padding: 16px;
+        opacity: 1;
+
+        -webkit-transition: opacity 1s ease-in-out;
+        -moz-transition: opacity 1s ease-in-out;
+        -ms-transition: opacity 1s ease-in-out;
+        -o-transition: opacity 1s ease-in-out;
+        transition: opacity 1s ease-in-out;
+    }
+
+    /* Show the snackbar when clicking on a button (class added with JavaScript) */
+    .snackAlert.hiding {
+        display: block;
+        opacity: 0;
+    }
+    .snackAlert.show {
+        display: block;
+        opacity: 1;
+        /* Show the snackbar */
+        /* Add animation: Take 0.5 seconds to fade in and out the snackbar. 
+                However, delay the fade out process for 2.5 seconds */
+        -webkit-animation: fadein 1.5s;
+        animation: fadein 1.5s;
+    }
+
+    /* Animations to fade the snackbar in and out */
+    @-webkit-keyframes fadein {
+        from {
+            bottom: 0;
+            opacity: 0;
+        }
+        to {
+            bottom: 20px;
+            opacity: 1;
+        }
+    }
+
+    @keyframes fadein {
+        from {
+            bottom: 0;
+            opacity: 0;
+        }
+        to {
+            bottom: 20px;
+            opacity: 1;
+        }
+    }
+</style>

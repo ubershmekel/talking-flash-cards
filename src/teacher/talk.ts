@@ -24,13 +24,19 @@ export function init() {
 
   for (let i = 0; i < voices.length; i++) {
     const voc = voices[i];
-    voiceMap[voc.lang] = voc;
+    // On Android Chrome, the language code has an underscore instead of a hyphen.
+    // So we replace the underscore to make this app work everywhere.
+    const vocCode = voc.lang.replace('_', '-');
+    voiceMap[vocCode] = voc;
     // console.log('voc', voc);
   }
 }
 
+let wasCancelled = false;
+
 export function stopTalking() {
   window.speechSynthesis.cancel();
+  wasCancelled = true;
   talkBuffer = [];
 }
 
@@ -49,12 +55,20 @@ export async function talkBufferPush(phrase: Say) {
   talkBuffer.push(phrase);
 }
 
-export async function talkBufferGo() {
+// talkBufferGo returns `true` if it finished
+// and returns `false` if it was cancelled.
+export async function talkBufferGo(): Promise<boolean> {
+  wasCancelled = false;
   while (talkBuffer.length > 0) {
     const phrase: Say = talkBuffer.shift() as Say;
     await speak(phrase);
+    if (wasCancelled) {
+      return false;
+    }
+    console.log("now we wait...");
     await sleep(phrase.pause * 1000);
   }
+  return true;
 }
 
 let lastSpoken = new Date().getTime();
@@ -72,8 +86,16 @@ export async function speak({lang, text, rate}: Say) {
   }
   window.speechSynthesis.cancel();
 
-  const utterThis = new window.SpeechSynthesisUtterance(text);
+  const utterThis = new SpeechSynthesisUtterance(text);
+  // https://bugs.chromium.org/p/chromium/issues/detail?id=487255#c62
+  // https://stackoverflow.com/questions/33889107/speech-synthesis-in-chrome-for-android-not-loading-voices
+  if (!voiceMap[lang]) {
+    console.warn("Tried to speak before voices were ready", voiceMap, lang, voiceMap[lang]);
+    return;
+  }
   utterThis.voice = voiceMap[lang];
+  utterThis.lang = voiceMap[lang].lang;
+  // utterThis.voiceURI = voiceMap[lang].voiceURI;
   if (rate) {
     utterThis.rate = rate;
   }
