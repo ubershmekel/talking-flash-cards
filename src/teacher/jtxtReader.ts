@@ -61,7 +61,7 @@ export async function getFile() {
   //   "api_key"
   // );
   const request = new Request(
-    "examples/attack-on-titan-s1e1.jtxt",
+    "examples/attack-on-titan-s1e1.json.txt",
     {
       method: "GET",
       headers,
