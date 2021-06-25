@@ -1,0 +1,73 @@
+<json>
+{
+  "languages": ["es-ES", "en-US"],
+  "title": "Top 10 Spanish words",
+  "say": [
+    {
+      "line": 0,
+      "rate": 0.9,
+      "pause": 1.0
+    },
+    {
+      "line": 1,
+      "rate": 1.0,
+      "pause": 0.5
+    },
+    {
+      "line": 0,
+      "rate": 0.5,
+      "pause": 1.0
+    },
+    {
+      "line": 0,
+      "rate": 1.0,
+      "pause": 1.0
+    }
+  ]
+}
+</json>
+
+que
+that, what
+
+de
+of, from
+
+sí
+yes
+
+no
+no
+
+a
+to
+
+la
+the (for singular feminine nouns)
+
+el
+the (for masculine singular nouns)
+
+es
+he is, she is, it is (for essential characteristics)
+
+y
+and
+
+en
+in, on, at
+
+lo
+it, him (direct-object pronoun)
+
+que es el
+what is he
+
+el no es de aqui
+he is not from here
+
+ella no está bien
+she is not well
+
+el esta comiendo burrito y taco
+he is eating a burrito and taco

@@ -1,6 +1,6 @@
 <template>
   <div class="controls">
-    <h1>Controls</h1>
+    <h2 v-if="lesson && lesson.data">{{ lesson.data.title }}</h2>
     <button v-on:click="speak">Speak</button>
     <br />
     <button v-on:click="stop">Stop</button>
@@ -26,7 +26,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { getFile, Lesson } from '../teacher/jtxtReader';
+import { getJsonTxtFile, Lesson } from '../teacher/jtxtReader';
 import * as talk from '../teacher/talk';
 
 interface ComponentData {
@@ -48,9 +48,7 @@ export default defineComponent({
     async speak(): Promise<void> {
       if (!this.$data.lesson) {
         talk.init();
-        const lesson = await getFile();
-        this.$data.lesson = lesson;
-        this.$data.indexMax = lesson.pairs.length;
+        // const url = "examples/attack-on-titan-s1e1.json.txt";
       }
 
       this.$data.isPlaying = true;
@@ -126,6 +124,15 @@ export default defineComponent({
       talk.stopTalking();
     }
   },
+  async mounted() {
+    if (!this.dataUrl) {
+      console.error("No dataUrl", this.dataUrl);
+      return;
+    }
+    const lesson = await getJsonTxtFile(this.dataUrl);
+    this.$data.lesson = lesson;
+    this.$data.indexMax = lesson.pairs.length;
+  },
   data() {
     return {
       index: 1,
@@ -136,6 +143,7 @@ export default defineComponent({
   },
   props: {
     msg: String,
+    dataUrl: String,
   },
 });
 </script>

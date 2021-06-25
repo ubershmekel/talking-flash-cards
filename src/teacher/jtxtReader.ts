@@ -54,14 +54,22 @@ export function parseJtxt(text: string): Lesson {
   }
 }
 
-export async function getFile() {
+export async function getJsonTxtFile(url: string) {
+  const text = await getFile(url);
+  const lesson = parseJtxt(text);
+  console.log(lesson);
+  return lesson;
+}
+
+
+export async function getFile(url: string) {
   const headers = new Headers();
   // headers.append(
   //   "Authorization",
   //   "api_key"
   // );
   const request = new Request(
-    "examples/attack-on-titan-s1e1.json.txt",
+    url,
     {
       method: "GET",
       headers,
@@ -71,7 +79,5 @@ export async function getFile() {
   );
   const res = await fetch(request);
   const text = await res.text();
-  const lesson = parseJtxt(text);
-  console.log(lesson);
-  return lesson;
+  return text;
 }

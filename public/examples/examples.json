@@ -1,0 +1,12 @@
+{
+  "examples": [
+    {
+      "title": "Attack on Titan S1E1 script",
+      "url": "./examples/attack-on-titan-s1e1.json.txt"
+    },
+    {
+      "title": "Top 10 Spanish words",
+      "url": "./examples/top-10-spanish-words.json.txt"
+    }
+  ]
+}
