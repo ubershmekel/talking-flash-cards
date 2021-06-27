@@ -1,7 +1,9 @@
 <template>
   <div class="controls">
     <h2 v-if="lesson && lesson.data">{{ lesson.data.title }}</h2>
-    <button v-on:click="speak">Speak</button>
+    <div v-if="isPlaying">▶️</div>
+    <div v-else>⏹</div>
+    <button v-on:click="speak">Play</button>
     <br />
     <button v-on:click="stop">Stop</button>
     <br />
@@ -10,7 +12,7 @@
     <button v-on:click="prev">&lt;&lt;</button>
     <button v-on:click="next">&gt;&gt;</button>
     <br />
-    <input class="slider" type="range" v-model.number="index" :min="indexMin" :max="indexMax">
+    <input class="slider" type="range" v-model.number="index" :min="indexMin" :max="indexMax" @change="sliderSet">
 
     <div v-if="lesson">
       <div class="from">
@@ -51,7 +53,6 @@ export default defineComponent({
         // const url = "examples/attack-on-titan-s1e1.json.txt";
       }
 
-      this.$data.isPlaying = true;
       this.play();
     },
 
@@ -82,16 +83,29 @@ export default defineComponent({
       this.validateIndex();
     },
 
+    sliderSet() {
+      console.log("sliderSet", this.$data.index);
+      talk.stopTalking();
+      this.validateIndex();
+    },
+
     async play() {
+      if (this.$data.isPlaying) {
+        console.log("play while playing");
+        return;
+      }
+
       if (!this.$data.lesson) {
         console.error("playing an empty lesson");
         return;
       }
 
+      this.$data.isPlaying = true;
       const languages = this.$data.lesson.data.languages;
       while (this.$data.isPlaying) {
+        const nowIndex = this.$data.index;
 
-        const texts = this.$data.lesson.pairs[this.$data.index - 1];
+        const texts = this.$data.lesson.pairs[nowIndex - 1];
         for (let sayJtxt of this.$data.lesson.data.say) {
           const lineIndex = sayJtxt["line"];
           const saySay = {
@@ -113,7 +127,8 @@ export default defineComponent({
 
         console.log("index played", finished, this.$data.index);
 
-        if (finished && this.isPlaying) {
+        // We want to avoid calling `next` after a seek
+        if (nowIndex === this.$data.index && finished && this.isPlaying) {
           this.next();
         }
       }
@@ -139,6 +154,7 @@ export default defineComponent({
       indexMin: 1,
       indexMax: 5,
       lesson: null,
+      isPlaying: false,
     } as ComponentData;
   },
   props: {
