@@ -62,7 +62,7 @@ being trapped or captured
 鳥籠の中に囚われていた
 Trapped in a bird cage
 
-屈辱を
+屈辱
 humiliation
 
 総員
@@ -107,8 +107,11 @@ wall
 外
 outside
 
+拠点
+a base, or site
+
 拠点とする
-to have a base
+to have or make a base
 
 ここを我々人類最初の壁外拠点とする
 Make this the first base beyond the wall for us humans
@@ -212,11 +215,17 @@ You slept so deeply that you're just half awake
 いや
 No
 
-気がする (きがする)
-to have a feeling (that)
+何か
+Something
 
 すっげー
-incredible
+incredible, unbelievable
+
+何かすっげー
+Someting incredible
+
+気がする (きがする)
+to have a feeling (that)
 
 長い
 long
@@ -230,7 +239,7 @@ have a feeling (that)
 だけど
 however
 
-何かすっげー長い夢を見てた気がするんだけど
+長い夢を見てた気がするんだけど
 I feel like I had a really long dream
 
 何だったっけ
@@ -248,104 +257,239 @@ Eren why are you crying
 聞け
 Listen
 
+神
+God
+
+叡智
+Wisdom
+
+によって
+According to, because of
+
+作られた
+Made, produced
+
 壁は神の叡智によって作られた
 The wall was made by the wisdom of God
 
+こそ
+Precisely, for sure
+
+御技
+divine work
+
 壁こそが神の御技である
-The wall is God's skill
+The wall is God's work
 
 何人たりとも
 Any number of people
 
+怪我
+injure, or hurt
+
+ならない
+do not become, do not attain
+
 壁を怪我してはならない
 Don't hurt the wall
+
+言うな
+don't say
+
+誰にも
+to anyone, to everyone
+
+泣いてた
+was crying
+
+とか
+or something, or whatever, etc
 
 言うなよ誰にもオレが泣いてたとか
 Don't tell anyone I was crying
 
 言わない
-Not say
+I won't say
+
+理由
+Reason, motive
+
+なく
+Nonexistent, impossible
+
+涙
+tears
+
+出る
+to exit, to shed
+
+涙が出る
+to shed tears
+
+なんて
+how? what? what's that?
 
 でも理由もなく涙が出るなんて
-But tears come out for no reason
+But tears coming out for no reason
+
+おじさん
+Uncle, old man, dad
+
+診て
+Examine
+
+もらったら
+Asking to get someone to do something
 
 一度おじさんに診てもらったら
-Once you see your uncle
+Once you see your dad, get him to give you a checkup
 
 バカ言え
-Say stupid
+stupid to say
 
 親父に言えるかそんなこと
-Can you say that to my father
+I can't say that to my father
 
 なに泣いてんだエレン
-What was crying Eren
+What are you crying about, Eren?
 
-ハンネスさん
-Hannes
+怒る
+To get angry
+
+怒られた
+Got angry
 
 ミカサに何か怒られたのか
-Did Mikasa get angry?
+Did Mikasa get angry about something?
 
-は?何でオレが泣くんだよ...って
-Why am I crying ...
+は?何でオレが泣くんだよ
+Huh? Why say I am crying?
 
 酒くさ
-Sake
+sake stench
 
 いいじゃねぇかよ
-Isn't she good?
+It's like come on, you know?
 
 また飲んでる
-She is drinking again
+You're drinking again
 
 お前らも一緒にどうだ
-How about you guys together
+How about you guys join?
 
 いやあの仕事は?
-What's that job?
+What about your job?
+
+門兵
+Gate
+
+兵
+Soldier
 
 おう今日は門兵だ
 Oh, I'm a gate soldier today
 
+一日中
+All day
+
+わけだ
+Concluision, reason, situation
+
 一日中ここにいるわけだから
 Because I'm here all day
 
+やがて
+Soon, eventually
+
+腹が減り
+To become hungry
+
+喉
+throat
+
+渇く
+Thirsty, or dry
+
 やがて腹が減り喉も渇く
-Eventually I'm hungry and thirsty
+Eventually I get hungry and thirsty
+
+たまたま
+Occasionally, unexpectedly
+
+混じっていた
+Got mixed
 
 飲み物の中にたまたま酒が混じっていたことは
-It happened that alcohol was mixed in the drink
+As for alcohol sometimes getting mixed in our drinks
+
+ささいな
+trivial, slight, small
+
+に過ぎねぇ
+merely, no more than, just
 
 ささいな問題に過ぎねぇ
-It's just a trivial problem
+It's not a big problem
+
+いざって時
+in an emergency, in crunch time
 
 そんなんでいざって時戦えんの
-That ’s why I ’m fighting
+In an emergency, can you fight like that?
 
 いざって時って何だ
-What is the time
+What emergency?
 
 決まってんだろ
-It's decided
+Needless to say (expression, literally "it has been settled")
+
+壊して
+To break
+
+街
+town
 
 ヤツらが壁を壊して街に入ってきた時だよ
-It was when they broke the wall and entered the city
+When they break the wall and enter the city
 
-いてっ
-Teite
+急
+sudden, abrupt, swift
+
+大声出す
+raise voice, shout
 
 おいエレン急に大声出すんじゃねぇよ
-Hey Eren, don't suddenly yell out
+Hey Eren, don't suddenly shout
+
+元気
+Lively, healthy
+
+医者
+doctor
+
+倅
+son, brat
 
 元気がいいな医者の倅
-A cheerful doctor
+You're a lively doctor's son
+
+壊す
+to break, to wreck
+
+ことがあったら
+conditional, if this had occurred
 
 ヤツらが壁を壊すことがあったら
 If they ever break the wall
 
+しっかり
+Properly, strongly
+
+やる
+to do
+
 そらしっかりやるさ
-I'll do it well
+we'll handle it well
 
 しかしな
 But
