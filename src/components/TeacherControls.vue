@@ -123,9 +123,11 @@ export default defineComponent({
         const texts = this.$data.lesson.pairs[nowIndex - 1];
         for (let sayJtxt of this.$data.lesson.data.say) {
           const lineIndex = sayJtxt["line"];
+          let lineText = texts[lineIndex];
+          const lineTextNoParentheses = lineText.replace(/\(.+\)/, '');
           const saySay = {
             lang: languages[lineIndex],
-            text: texts[lineIndex],
+            text: lineTextNoParentheses,
             rate: sayJtxt.rate,
             pause: sayJtxt.pause,
           };
