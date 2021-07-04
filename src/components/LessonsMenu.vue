@@ -1,7 +1,7 @@
 <template>
   <div class="menu">
     <div v-for="example in examplesData.examples" :key="example.title">
-      <a :href="'?data=' + example.url">{{ example.title }}</a>
+      <a :href="example.url">{{ example.title }}</a>
     </div>
   </div>
 </template>

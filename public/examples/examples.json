@@ -2,11 +2,15 @@
   "examples": [
     {
       "title": "Attack on Titan S1E1 script",
-      "url": "./examples/attack-on-titan-s1e1.json.txt"
+      "url": "?data=./examples/attack-on-titan-s1e1.json.txt"
     },
     {
       "title": "Top 10 Spanish words",
-      "url": "./examples/top-10-spanish-words.json.txt"
+      "url": "?data=./examples/top-10-spanish-words.json.txt"
+    },
+    {
+      "title": "Create your own lesson",
+      "url": "https://github.com/ubershmekel/talking-flash-cards"
     }
   ]
 }
