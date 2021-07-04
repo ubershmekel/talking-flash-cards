@@ -2,9 +2,25 @@ const voiceMap: {[lang: string]: SpeechSynthesisVoice} = {};
 
 let talkBuffer: Say[] = [];
 
-export function init() {
+async function waitForInit() {
+  let attempts = 0;
+  const intervalMs = 200;
+  const maxAttempts = 20;
+  while (Object.keys(voiceMap).length === 0) {
+    attempts++;
+    console.error("waitForInit must init");
+    init();
+    await sleep(intervalMs);
+    if (attempts > maxAttempts) {
+      console.error("Failed to load voices within ms:", intervalMs * maxAttempts);
+      return;
+    }
+  }
+}
+
+function init() {
   const voices = window.speechSynthesis.getVoices();
-  console.log('voices loop', voices.length);
+  console.log('talk.init voices.length', voices.length);
   if (voices.length === 0) {
     console.error('No synth voices :(');
     return;
@@ -58,6 +74,7 @@ export async function talkBufferPush(phrase: Say) {
 // talkBufferGo returns `true` if it finished
 // and returns `false` if it was cancelled.
 export async function talkBufferGo(): Promise<boolean> {
+  await waitForInit();
   wasCancelled = false;
   while (talkBuffer.length > 0) {
     const phrase: Say = talkBuffer.shift() as Say;
@@ -65,7 +82,7 @@ export async function talkBufferGo(): Promise<boolean> {
     if (wasCancelled) {
       return false;
     }
-    console.log("now we wait...");
+    console.log("talkBufferGo phrase.pause...");
     await sleep(phrase.pause * 1000);
   }
   return true;

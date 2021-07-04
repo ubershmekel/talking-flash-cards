@@ -3,7 +3,7 @@
     <h2 v-if="lesson && lesson.data">{{ lesson.data.title }}</h2>
     <div v-if="isPlaying">▶️</div>
     <div v-else>⏹</div>
-    <button v-on:click="speak">Play</button>
+    <button v-on:click="play">Play</button>
     <br />
     <button v-on:click="stop">Stop</button>
     <br />
@@ -48,15 +48,6 @@ export default defineComponent({
 
   },
   methods: {
-    async speak(): Promise<void> {
-      if (!this.$data.lesson) {
-        talk.init();
-        // const url = "examples/attack-on-titan-s1e1.json.txt";
-      }
-
-      this.play();
-    },
-
     validateIndex() {
       if (!this.$data.lesson) {
         return;
