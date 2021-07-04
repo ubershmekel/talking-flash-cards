@@ -1,17 +1,19 @@
 <template>
   <div class="controls">
     <h2 v-if="lesson && lesson.data">{{ lesson.data.title }}</h2>
-    <div v-if="isPlaying">▶️</div>
-    <div v-else>⏹</div>
-    <button v-on:click="play">Play</button>
-    <br />
-    <button v-on:click="stop">Stop</button>
-    <br />
-    <input v-model="index">
-    <br />
-    <button v-on:click="prev">&lt;&lt;</button>
-    <button v-on:click="next">&gt;&gt;</button>
-    <br />
+    <div v-if="isPlaying">
+      <button v-on:click="stop">⏹Stop</button>
+    </div>
+    <div v-else>
+      <button v-on:click="play" class="play-button">▶️Play</button>
+    </div>
+
+    <div>
+      <button v-on:click="prev">&lt;&lt;</button>
+      <input v-model="index" type="text" class="index-textbox">
+      <button v-on:click="next">&gt;&gt;</button>
+    </div>
+
     <input class="slider" type="range" v-model.number="index" :min="indexMin" :max="indexMax" @change="onSliderSet">
 
     <div v-if="lesson">
@@ -197,5 +199,33 @@ button {
 
 .slider {
   display: inline-block;
+  width: 20rem;
+}
+
+.index-textbox {
+  text-align: center;
+  width: 4em;
+}
+
+.play-button {
+  animation: shadow-pulse 3s linear infinite;
+}
+
+@-webkit-keyframes shadow-pulse {
+  0% {
+      box-shadow: #cc0 0px 0px 0px 0px;
+  }
+  50% {
+      box-shadow: #ff0 0px 0px 12px 6px;
+  }
+  100% {
+      box-shadow: #cc0 0px 0px 0px 0px;
+  }
+}
+
+@media (max-width:50rem) {
+  .slider {
+    width: 80%;
+  }
 }
 </style>
