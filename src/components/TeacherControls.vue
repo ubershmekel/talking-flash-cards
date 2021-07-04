@@ -80,6 +80,10 @@ export default defineComponent({
     },
 
     updateUrl() {
+      if (!this.dataUrl) {
+        console.error("Tried to update url without a data url set");
+        return;
+      }
       replaceUrlParams({
         data: this.dataUrl,
         i: this.$data.index,
@@ -161,7 +165,6 @@ export default defineComponent({
     this.validateIndex();    
   },
   data() {
-    console.log('initialIndex', this.initialIndex, this.index, this.$data.index);
     let index = 1;
     let indexMax = 5;
     if (this.initialIndex) {

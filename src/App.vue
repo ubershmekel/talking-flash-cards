@@ -7,7 +7,7 @@
     <TeacherControls :dataUrl="urlParams.data" :initialIndex="+urlParams.i"/>
   </div>
   <div v-else>
-    <ExampleMenu />
+    <LessonsMenu />
   </div>
   <footer>
     <a href="https://github.com/ubershmekel/talking-flash-cards"
@@ -20,15 +20,14 @@
 import { defineComponent } from "vue";
 // import HelloWorld from './components/HelloWorld.vue';
 import TeacherControls from "./components/TeacherControls.vue";
-import ExampleMenu from "./components/ExampleMenu.vue";
+import LessonsMenu from "./components/LessonsMenu.vue";
 import "./components/ShowJsErrors.vue";
 import { urlGetParams } from "./teacher/browser";
 
 export default defineComponent({
   name: "App",
   components: {
-    // HelloWorld,
-    ExampleMenu,
+    LessonsMenu,
     TeacherControls,
   },
   data() {

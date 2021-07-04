@@ -11,7 +11,7 @@ import { defineComponent } from "vue";
 import examplesData from "../../public/examples/examples.json";
 console.log("examplesData", examplesData);
 export default defineComponent({
-  name: "ExampleMenu",
+  name: "LessonsMenu",
   data() {
     return {
       examplesData,
