@@ -8,7 +8,7 @@ async function waitForInit() {
   const maxAttempts = 20;
   while (Object.keys(voiceMap).length === 0) {
     attempts++;
-    console.error("waitForInit must init");
+    console.log("waitForInit must init");
     init();
     await sleep(intervalMs);
     if (attempts > maxAttempts) {

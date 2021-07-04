@@ -26,6 +26,9 @@
   ]
 }
 </json>
+こんにちは 
+Welcome to talking flash cards. Listen to the Japanese and try to say the english translation before the narrator does.
+
 その
 That
 
