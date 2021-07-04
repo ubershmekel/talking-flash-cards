@@ -13,6 +13,10 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 
+# Package lock isn't consistent across platforms
+# so I get extra changes added to it when I switch machines. 
+package-lock.json
+
 # Editor directories and files
 .idea
 .vscode

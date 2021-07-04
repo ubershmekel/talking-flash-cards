@@ -12,7 +12,7 @@
     <button v-on:click="prev">&lt;&lt;</button>
     <button v-on:click="next">&gt;&gt;</button>
     <br />
-    <input class="slider" type="range" v-model.number="index" :min="indexMin" :max="indexMax" @change="sliderSet">
+    <input class="slider" type="range" v-model.number="index" :min="indexMin" :max="indexMax" @change="onSliderSet">
 
     <div v-if="lesson">
       <div class="from">
@@ -30,6 +30,7 @@
 import { defineComponent } from 'vue';
 import { getJsonTxtFile, Lesson } from '../teacher/jtxtReader';
 import * as talk from '../teacher/talk';
+import { replaceUrlParams } from '../teacher/browser';
 
 interface ComponentData {
   index: number;
@@ -75,21 +76,36 @@ export default defineComponent({
       talk.stopTalking();
       this.$data.index -= 1;
       this.validateIndex();
+      this.updateUrl();
     },
 
     next() {
       talk.stopTalking();
       this.$data.index += 1;
       this.validateIndex();
+      this.updateUrl();
     },
 
-    sliderSet() {
-      console.log("sliderSet", this.$data.index);
+    updateUrl() {
+      replaceUrlParams({
+        data: this.dataUrl,
+        i: this.$data.index,
+      });
+    },
+
+    onSliderSet() {
+      console.log("onSliderSet", this.$data.index);
       talk.stopTalking();
+      if (!this.dataUrl) {
+        console.warn('messing with slider but got no data, odd...');
+        return;
+      }
       this.validateIndex();
+      this.updateUrl();
     },
 
     async play() {
+
       if (this.$data.isPlaying) {
         console.log("play while playing");
         return;
@@ -147,12 +163,25 @@ export default defineComponent({
     const lesson = await getJsonTxtFile(this.dataUrl);
     this.$data.lesson = lesson;
     this.$data.indexMax = lesson.pairs.length;
+    // We just got a real lesson with a max index, make sure the index from
+    // the URL is valid.
+    this.validateIndex();    
   },
   data() {
+    console.log('initialIndex', this.initialIndex, this.index, this.$data.index);
+    let index = 1;
+    let indexMax = 5;
+    if (this.initialIndex) {
+      // For some reason, if the arbitrary indexMax is smaller than initialIndex,
+      // the slider does not have a fresh indexMax and renders the knob in the
+      // wrong position. So setting `indexMax` here.
+      index = this.initialIndex;
+      indexMax = index + 1;
+    }
     return {
-      index: 1,
       indexMin: 1,
-      indexMax: 5,
+      index,
+      indexMax,
       lesson: null,
       isPlaying: false,
     } as ComponentData;
@@ -160,6 +189,7 @@ export default defineComponent({
   props: {
     msg: String,
     dataUrl: String,
+    initialIndex: Number,
   },
 });
 </script>

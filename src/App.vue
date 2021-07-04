@@ -4,7 +4,7 @@
   <h1>Talking Flash Cards</h1>
   <div v-if="urlParams.data">
     <a href="?">↖</a>
-    <TeacherControls :dataUrl="urlParams.data"/>
+    <TeacherControls :dataUrl="urlParams.data" :initialIndex="+urlParams.i"/>
   </div>
   <div v-else>
     <ExampleMenu />
@@ -22,6 +22,7 @@ import { defineComponent } from "vue";
 import TeacherControls from "./components/TeacherControls.vue";
 import ExampleMenu from "./components/ExampleMenu.vue";
 import "./components/ShowJsErrors.vue";
+import { urlGetParams } from "./teacher/browser";
 
 export default defineComponent({
   name: "App",
@@ -32,23 +33,11 @@ export default defineComponent({
   },
   data() {
     return {
-      urlParams: parseQuery(document.location.search),
+      urlParams: urlGetParams(),
     };
   },
 });
 
-function parseQuery(queryString: string) {
-  // https://stackoverflow.com/questions/2090551/parse-query-string-in-javascript
-  var query: { [key: string]: string } = {};
-  var pairs = (
-    queryString[0] === "?" ? queryString.substr(1) : queryString
-  ).split("&");
-  for (var i = 0; i < pairs.length; i++) {
-    var pair = pairs[i].split("=");
-    query[decodeURIComponent(pair[0])] = decodeURIComponent(pair[1] || "");
-  }
-  return query;
-}
 </script>
 
 <style>
