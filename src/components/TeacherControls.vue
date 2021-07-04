@@ -10,7 +10,9 @@
 
     <div>
       <button v-on:click="prev">&lt;&lt;</button>
-      <input v-model="index" type="text" class="index-textbox">
+      <span class="index-box">
+      {{ index }} / {{ indexMax }}
+      </span>
       <button v-on:click="next">&gt;&gt;</button>
     </div>
 
@@ -205,7 +207,7 @@ button {
   width: 20rem;
 }
 
-.index-textbox {
+.index-box {
   text-align: center;
   width: 4em;
 }
