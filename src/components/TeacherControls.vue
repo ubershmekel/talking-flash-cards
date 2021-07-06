@@ -142,7 +142,7 @@ export default defineComponent({
         //   return;
         // }
 
-        console.log("index played", finished, this.$data.index);
+        console.log("index played", this.$data.index, "finished", finished);
 
         // We want to avoid calling `next` after a seek
         if (nowIndex === this.$data.index && finished && this.isPlaying) {

@@ -93,7 +93,8 @@ let lastSpoken = new Date().getTime();
 export async function speak({lang, text, rate}: Say) {
   const secondsSinceSpoken = (new Date().getTime() - lastSpoken) / 1000;
   if (secondsSinceSpoken < 0.1) {
-    throw new Error("You're talking too fast");
+    console.error("You're talking too fast, perhaps the tts engine had a malfunction, skipping `speak`");
+    return;
   } else {
     lastSpoken = new Date().getTime();
   }
@@ -116,7 +117,7 @@ export async function speak({lang, text, rate}: Say) {
   if (rate) {
     utterThis.rate = rate;
   }
-  console.log("speeaking", lang, text, utterThis.voice);
+  console.log("speaking", lang, text);
   window.speechSynthesis.speak(utterThis);
   return new Promise<void>((resolve, reject) => {
     utterThis.onend = (event) => {
